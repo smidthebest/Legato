@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "300663680799",
+    "firebase_url": "https://legato-2adc3.firebaseio.com",
+    "project_id": "legato-2adc3",
+    "storage_bucket": "legato-2adc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300663680799:android:bdf79e463e1eaef5380a2a",
+        "android_client_info": {
+          "package_name": "com.tuneoflife.legato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300663680799-ma8d2s2683bttfnh204t2g27koi00ahn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkV8Lo4rjqdiZXqUgKdWWBqvoDTcuoKjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300663680799-ma8d2s2683bttfnh204t2g27koi00ahn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
