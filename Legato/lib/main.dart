@@ -32,6 +32,7 @@ class _MyApp extends State<MyApp> {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      debugShowCheckedModeBanner: false,
       home: Splash(),
     );
   }
