@@ -1,9 +1,8 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 import '../auth/auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Home extends StatefulWidget {
   Home();
@@ -47,7 +46,7 @@ class _Home extends State<Home> {
                 ),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                   child: GNav(
                     gap: 8,
                     activeColor: Colors.white,
@@ -57,19 +56,19 @@ class _Home extends State<Home> {
                     tabBackgroundColor: Colors.orangeAccent,
                     tabs: [
                       GButton(
-                        icon: Icons.home,
-                        text: 'Home',
+                        icon: FontAwesomeIcons.music,
+                        text: 'Music',
                       ),
                       GButton(
-                        icon: Icons.favorite_border,
-                        text: 'Likes',
+                        icon: FontAwesomeIcons.tools,
+                        text: 'Resources',
                       ),
                       GButton(
-                        icon: Icons.search,
-                        text: 'Search',
+                        icon: FontAwesomeIcons.podcast,
+                        text: 'Podcast',
                       ),
                       GButton(
-                        icon: Icons.account_circle,
+                        icon: FontAwesomeIcons.userAlt,
                         text: 'Profile',
                       ),
                     ],
@@ -88,6 +87,10 @@ class _Home extends State<Home> {
                           case 2:
                             _navigatorKey.currentState
                                 .pushReplacementNamed("2");
+                            break;
+                          case 2:
+                            _navigatorKey.currentState
+                                .pushReplacementNamed("3");
                             break;
                           default:
                             _navigatorKey.currentState
