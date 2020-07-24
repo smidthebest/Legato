@@ -26,75 +26,88 @@ class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orangeAccent,
-      body: Navigator(key: _navigatorKey, onGenerateRoute: generateRoute),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(100)),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: -10,
-                blurRadius: 60,
-                color: Colors.black.withOpacity(.20),
-                offset: Offset(0, 15),
+      body: Stack(
+        children: [
+          Navigator(key: _navigatorKey, onGenerateRoute: generateRoute),
+          Positioned(
+            child: SafeArea(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: -10,
+                      blurRadius: 60,
+                      color: Colors.black.withOpacity(.20),
+                      offset: Offset(0, 15),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                  child: GNav(
+                    gap: 8,
+                    activeColor: Colors.white,
+                    iconSize: 24,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    duration: Duration(milliseconds: 800),
+                    tabBackgroundColor: Colors.orangeAccent,
+                    tabs: [
+                      GButton(
+                        icon: Icons.home,
+                        text: 'Home',
+                      ),
+                      GButton(
+                        icon: Icons.favorite_border,
+                        text: 'Likes',
+                      ),
+                      GButton(
+                        icon: Icons.search,
+                        text: 'Search',
+                      ),
+                      GButton(
+                        icon: Icons.account_circle,
+                        text: 'Profile',
+                      ),
+                    ],
+                    selectedIndex: _currentTabIndex,
+                    onTabChange: (index) {
+                      if (index != _currentTabIndex) {
+                        switch (index) {
+                          case 0:
+                            _navigatorKey.currentState
+                                .pushReplacementNamed("0");
+                            break;
+                          case 1:
+                            _navigatorKey.currentState
+                                .pushReplacementNamed("1");
+                            break;
+                          case 2:
+                            _navigatorKey.currentState
+                                .pushReplacementNamed("2");
+                            break;
+                          default:
+                            _navigatorKey.currentState
+                                .pushReplacementNamed("0");
+                            break;
+                        }
+                        setState(() {
+                          _currentTabIndex = index;
+                        });
+                      }
+                    },
+                  ),
+                ),
               ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: GNav(
-              gap: 8,
-              activeColor: Colors.white,
-              iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              duration: Duration(milliseconds: 800),
-              tabBackgroundColor: Colors.orangeAccent,
-              tabs: [
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: Icons.favorite_border,
-                  text: 'Likes',
-                ),
-                GButton(
-                  icon: Icons.search,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: Icons.account_circle,
-                  text: 'Profile',
-                ),
-              ],
-              selectedIndex: _currentTabIndex,
-              onTabChange: (index) {
-                if (index != _currentTabIndex) {
-                  switch (index) {
-                    case 0:
-                      _navigatorKey.currentState.pushReplacementNamed("0");
-                      break;
-                    case 1:
-                      _navigatorKey.currentState.pushReplacementNamed("1");
-                      break;
-                    case 2:
-                      _navigatorKey.currentState.pushReplacementNamed("2");
-                      break;
-                    default:
-                      _navigatorKey.currentState.pushReplacementNamed("0");
-                      break;
-                  }
-                  setState(() {
-                    _currentTabIndex = index;
-                  });
-                }
-              },
             ),
-          ),
-        ),
+            bottom: 0,
+            left: 0,
+            right: 0,
+          )
+        ],
       ),
     );
   }
