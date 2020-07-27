@@ -2,10 +2,11 @@ import 'package:Legato/screens/media/post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Audio extends StatefulWidget {
   @override
-  _Audio createState() => _Audio();
+  State<Audio> createState() => _Audio();
 }
 
 class _Audio extends State<Audio> {
@@ -206,10 +207,18 @@ class _Audio extends State<Audio> {
 
   Widget getAudioCard(BuildContext context, DocumentSnapshot doc) {
     String link = doc.data["link"];
-    return Container(
-      width: 200,
-      color: Colors.red,
-      child: Text(link),
+
+    // print(link);
+    return YoutubePlayer(
+      controller: YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(link),
+        flags: YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      ),
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.blueGrey,
     );
   }
 }
