@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Post extends StatelessWidget {
-  const Post({
-    Key key,
-  }) : super(key: key);
+  Map<String, dynamic> data;
+  Post(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class Post extends StatelessWidget {
               ),
               child: Stack(
                 children: [
+                  getAudioCard(context, data),
                   Positioned(
                     bottom: 20,
                     right: 20,
@@ -102,6 +104,23 @@ class Post extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget getAudioCard(BuildContext context, Map<String, dynamic> doc) {
+    String link = data["link"];
+
+    // print(link);
+    return YoutubePlayer(
+      controller: YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(link),
+        flags: YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      ),
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.blueGrey,
     );
   }
 }

@@ -137,10 +137,8 @@ class _Audio extends State<Audio> {
                                     //   }).toList(),
                                     // );
                                     return Column(
-                                      children: [
-                                        Post(),
-                                        Post(),
-                                      ],
+                                      children:
+                                          getPosts(snapshot.data.documents),
                                     );
                                   },
                                 ),
@@ -205,20 +203,11 @@ class _Audio extends State<Audio> {
     );
   }
 
-  Widget getAudioCard(BuildContext context, DocumentSnapshot doc) {
-    String link = doc.data["link"];
-
-    // print(link);
-    return YoutubePlayer(
-      controller: YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(link),
-        flags: YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-        ),
-      ),
-      showVideoProgressIndicator: true,
-      progressIndicatorColor: Colors.blueGrey,
-    );
+  getPosts(List<DocumentSnapshot> documents) {
+    List<Widget> widgets = new List();
+    for (DocumentSnapshot i in documents) {
+      widgets.add(new Post(i.data));
+    }
+    return widgets;
   }
 }
