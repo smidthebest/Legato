@@ -56,49 +56,57 @@ class Post extends StatelessWidget {
                 )
               ],
             ),
-            Container(
-              height: 200,
-              margin: EdgeInsets.only(top: 10),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  getAudioCard(context, data),
-                  Positioned(
-                    bottom: 20,
-                    right: 20,
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Center(
-                            child: Icon(Icons.share),
-                          ),
-                        ),
-                        Container(
-                          height: 35,
-                          margin: EdgeInsets.only(left: 10),
-                          width: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Center(
-                            child: Icon(Icons.favorite_border),
-                          ),
-                        ),
-                      ],
+            SizedBox(
+              height: 10,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              clipBehavior: Clip.hardEdge,
+              child: Container(
+                margin: EdgeInsets.only(top: 0),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Stack(
+                  children: [
+                    Center(
+                      child: getAudioCard(context, data),
                     ),
-                  )
-                ],
+                    Positioned(
+                      bottom: 20,
+                      right: 20,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Icon(Icons.share),
+                            ),
+                          ),
+                          Container(
+                            height: 35,
+                            margin: EdgeInsets.only(left: 10),
+                            width: 35,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Icon(Icons.favorite_border),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ],
