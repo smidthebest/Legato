@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Audio extends StatefulWidget {
   @override
-  _Audio createState() => _Audio();
+  State<Audio> createState() => _Audio();
 }
 
 class _Audio extends State<Audio> {
@@ -13,6 +14,7 @@ class _Audio extends State<Audio> {
       stream: Firestore.instance.collection('audio').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return new Text('Loading...');
+
         return new ListView(
           children: snapshot.data.documents.map((DocumentSnapshot document) {
             return getAudioCard(context, document);
@@ -24,5 +26,18 @@ class _Audio extends State<Audio> {
 
   Widget getAudioCard(BuildContext context, DocumentSnapshot doc) {
     String link = doc.data["link"];
+
+    // print(link);
+    return YoutubePlayer(
+      controller: YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(link),
+        flags: YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      ),
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.blueGrey,
+    );
   }
 }
