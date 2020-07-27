@@ -49,10 +49,13 @@ class _Home extends State<Home> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                   child: GNav(
-                    gap: 8,
+                    gap: MediaQuery.of(context).size.width / 67.5,
                     activeColor: Colors.white,
-                    iconSize: 24,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    iconSize: MediaQuery.of(context).size.width / 22.5,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 27,
+                      vertical: 5,
+                    ),
                     duration: Duration(milliseconds: 800),
                     tabBackgroundColor: Colors.orangeAccent,
                     tabs: [
