@@ -1,3 +1,4 @@
+import 'package:Legato/screens/media/audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -118,12 +119,12 @@ class _Home extends State<Home> {
   Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case "0":
-        return MaterialPageRoute(builder: (context) => Auth());
+        return MaterialPageRoute(builder: (context) => Audio());
       case "1":
         return MaterialPageRoute(builder: (context) => Auth());
       default:
         return MaterialPageRoute(
-          builder: (context) => Auth(),
+          builder: (context) => Audio(),
         );
     }
   }
