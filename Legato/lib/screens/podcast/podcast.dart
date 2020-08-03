@@ -21,11 +21,10 @@ class _Podcast extends State<Podcast> {
     super.initState();
     indicator = 0;
     String link = data["link"];
+    ap.onDurationChanged.listen((Duration d) {
+      length = d.inMilliseconds;
+    });
     ap.setUrl(link).then((value) {
-      ap.onDurationChanged.listen((Duration d) {
-        length = d.inMilliseconds;
-      });
-
       ap.onAudioPositionChanged.listen((Duration p) {
         setState(() {
           indicator = p.inMilliseconds;
@@ -102,8 +101,6 @@ class _Podcast extends State<Podcast> {
   }
 
   Widget getAudioCard(BuildContext context, Map<String, dynamic> doc) {
-    print("1 : " + indicator.toString());
-    print("2 : " + length.toString());
     return Container(
       child: Row(
         //mainAxisSize: MainAxisSize.min,
@@ -125,12 +122,13 @@ class _Podcast extends State<Podcast> {
           ),
           Expanded(
             child: Slider(
+              min: 0,
+              max: 1.0,
               value: length < 0 ? 0 : indicator / length,
               onChanged: (val) async {
                 print(val);
                 print(length);
                 double ans = val * length;
-                print("The User changed it to " + ans.toString());
                 int result = await ap.seek(Duration(milliseconds: ans.round()));
                 setState(() {
                   indicator = ans.round();
