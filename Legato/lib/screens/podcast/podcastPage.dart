@@ -1,15 +1,17 @@
+import 'package:Legato/screens/podcast/podcast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Podcast extends StatefulWidget {
-  Podcast();
+class PodcastPage extends StatefulWidget {
+  PodcastPage();
 
   @override
-  _Podcast createState() => _Podcast();
+  _PodcastPage createState() => _PodcastPage();
 }
 
-class _Podcast extends State<Podcast> {
-  _Podcast();
+class _PodcastPage extends State<PodcastPage> {
+  _PodcastPage();
 
   @override
   void initState() {
@@ -53,33 +55,58 @@ class _Podcast extends State<Podcast> {
                 ],
               ),
             ),
-            IntrinsicHeight(
-              child: ListTile(
-                onTap: () {},
-                leading: FittedBox(
-                  child: Image.asset("assets/images/podcast.png"),
-                  fit: BoxFit.fitHeight,
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Balaji on da stiks",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "10 min • melodious",
-                      style: TextStyle(fontWeight: FontWeight.w300),
-                    ),
-                  ],
-                ),
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
+            Text("Hello"),
+            StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('podcasts').snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return new Text('Loading...');
+                // return new Column(
+                //   children: snapshot.data.documents
+                //       .map((DocumentSnapshot document) {
+                //     return Container();
+                //   }).toList(),
+                // );
+                return Column(
+                  children: getPodcasts(snapshot.data.documents),
+                );
+              },
             ),
+            // IntrinsicHeight(
+            //   child: ListTile(
+            //     onTap: () {},
+            //     leading: FittedBox(
+            //       child: Image.asset("assets/images/podcast.png"),
+            //       fit: BoxFit.fitHeight,
+            //     ),
+            //     title: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text(
+            //           "Balaji on da stiks",
+            //           style: TextStyle(fontWeight: FontWeight.bold),
+            //         ),
+            //         Text(
+            //           "10 min • melodious",
+            //           style: TextStyle(fontWeight: FontWeight.w300),
+            //         ),
+            //       ],
+            //     ),
+            //     trailing: Icon(Icons.arrow_forward_ios),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
+  }
+
+  getPodcasts(List<DocumentSnapshot> documents) {
+    List<Widget> widgets = new List();
+    for (DocumentSnapshot i in documents) {
+      widgets.add(new Podcast(i.data));
+    }
+    return widgets;
   }
 }

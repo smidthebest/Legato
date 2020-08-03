@@ -127,7 +127,7 @@ class _Home extends State<Home> {
       case "1":
         return MaterialPageRoute(builder: (context) => Auth());
       case "2":
-        return MaterialPageRoute(builder: (context) => Podcast());
+        return MaterialPageRoute(builder: (context) => PodcastPage());
       default:
         return MaterialPageRoute(
           builder: (context) => Audio(),
