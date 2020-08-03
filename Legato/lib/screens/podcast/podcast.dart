@@ -15,15 +15,17 @@ class _Podcast extends State<Podcast> {
   int indicator;
   AudioPlayer ap = new AudioPlayer();
   int length = -1;
+  bool paused = true;
 
   initState() {
     super.initState();
+    indicator = 0;
     String link = data["link"];
     ap.setUrl(link).then((value) {
       ap.onDurationChanged.listen((Duration d) {
         length = d.inMilliseconds;
       });
-      length = value;
+
       ap.onAudioPositionChanged.listen((Duration p) {
         setState(() {
           indicator = p.inMilliseconds;
@@ -33,8 +35,8 @@ class _Podcast extends State<Podcast> {
   }
 
   dispose() {
-    super.dispose();
     ap.dispose();
+    super.dispose();
   }
 
   Future<int> _getDuration() async {
@@ -47,159 +49,97 @@ class _Podcast extends State<Podcast> {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Container(
-        margin: EdgeInsets.only(top: 20),
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      color: Colors.yellow,
-                      child: Container(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Arnav Reddy",
-                          style: TextStyle(
-                            color: Colors.orangeAccent,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          "2 mins ago",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          IntrinsicHeight(
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              onTap: () {},
+              leading: FittedBox(
+                child: Image.asset("assets/images/podcast.png"),
+                fit: BoxFit.fitHeight,
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Balaji on da stiks",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "10 min • melodious",
+                    style: TextStyle(fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+              trailing: GestureDetector(
+                child: Icon(
+                  paused ? Icons.play_arrow_rounded : Icons.pause,
+                  size: 50,
+                  color: Colors.orangeAccent,
                 ),
-                Icon(
-                  Icons.settings_input_composite,
-                  size: 30,
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              clipBehavior: Clip.hardEdge,
-              child: Container(
-                margin: EdgeInsets.only(top: 0),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: getAudioCard(context, data),
-                    ),
-                    // Positioned(
-                    //   bottom: 20,
-                    //   right: 20,
-                    //   child: Row(
-                    //     children: [
-                    //       Container(
-                    //         height: 35,
-                    //         width: 35,
-                    //         decoration: BoxDecoration(
-                    //           color: Colors.white.withOpacity(0.5),
-                    //           borderRadius: BorderRadius.circular(5),
-                    //         ),
-                    //         child: Center(
-                    //           child: Icon(Icons.share),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 35,
-                    //         margin: EdgeInsets.only(left: 10),
-                    //         width: 35,
-                    //         decoration: BoxDecoration(
-                    //           color: Colors.white.withOpacity(0.5),
-                    //           borderRadius: BorderRadius.circular(5),
-                    //         ),
-                    //         child: Center(
-                    //           child: Icon(Icons.favorite_border),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // )
-                  ],
-                ),
+                onTap: () async {
+                  if (paused) {
+                    await ap.resume();
+                  } else {
+                    await ap.pause();
+                  }
+                  setState(() {
+                    paused = !paused;
+                  });
+                },
               ),
             ),
-          ],
-        ),
+          ),
+          getAudioCard(context, widget.data),
+        ],
       ),
     );
   }
 
   Widget getAudioCard(BuildContext context, Map<String, dynamic> doc) {
+    print("1 : " + indicator.toString());
+    print("2 : " + length.toString());
     return Container(
-        child: Column(
-      children: [
-        Row(children: [
-          FlatButton(
-            child: Icon(Icons.play_arrow),
-            onPressed: () async {
-              int restul = await ap.resume();
-            },
-          ),
-          FlatButton(
-            child: Icon(Icons.pause),
-            onPressed: () async {
-              int result = await ap.pause();
-            },
-          ),
-          FlatButton(
+      child: Row(
+        //mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
             child: Icon(Icons.replay_10),
-            onPressed: () async {
+            onTap: () async {
               int cur = await ap.getCurrentPosition();
               int result = await ap.seek(Duration(milliseconds: cur - 10000));
             },
           ),
-          FlatButton(
+          GestureDetector(
             child: Icon(Icons.forward_10),
-            onPressed: () async {
+            onTap: () async {
               int cur = await ap.getCurrentPosition();
               int result = await ap.seek(Duration(milliseconds: cur + 10000));
             },
-          )
-        ]),
-        Slider(
-          value: length < 0 ? 0 : indicator / length,
-          onChanged: (val) async {
-            print(val);
-            print(length);
-            double ans = val * length;
-            print("The User changed it to " + ans.toString());
-            int result = await ap.seek(Duration(milliseconds: ans.round()));
-            setState(() {
-              indicator = ans.round();
-            });
-          },
-        )
-      ],
-    ));
+          ),
+          Expanded(
+            child: Slider(
+              value: length < 0 ? 0 : indicator / length,
+              onChanged: (val) async {
+                print(val);
+                print(length);
+                double ans = val * length;
+                print("The User changed it to " + ans.toString());
+                int result = await ap.seek(Duration(milliseconds: ans.round()));
+                setState(() {
+                  indicator = ans.round();
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

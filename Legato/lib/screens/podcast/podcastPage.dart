@@ -55,7 +55,6 @@ class _PodcastPage extends State<PodcastPage> {
                 ],
               ),
             ),
-            Text("Hello"),
             StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance.collection('podcasts').snapshots(),
               builder: (BuildContext context,
@@ -106,6 +105,7 @@ class _PodcastPage extends State<PodcastPage> {
     List<Widget> widgets = new List();
     for (DocumentSnapshot i in documents) {
       widgets.add(new Podcast(i.data));
+      widgets.add(new SizedBox(height: 15));
     }
     return widgets;
   }
