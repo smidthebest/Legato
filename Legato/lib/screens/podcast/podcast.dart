@@ -22,7 +22,9 @@ class _Podcast extends State<Podcast> {
     indicator = 0;
     String link = data["link"];
     ap.onDurationChanged.listen((Duration d) {
-      length = d.inMilliseconds;
+      setState(() {
+        length = d.inMilliseconds;
+      });
     });
     ap.setUrl(link).then((value) {
       ap.onAudioPositionChanged.listen((Duration p) {
@@ -66,11 +68,11 @@ class _Podcast extends State<Podcast> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Balaji on da stiks",
+                    data["title"],
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "10 min • melodious",
+                    "10 min • " + data["note"],
                     style: TextStyle(fontWeight: FontWeight.w300),
                   ),
                 ],

@@ -31,7 +31,7 @@ class Post extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Arnav Reddy",
+                          data["title"],
                           style: TextStyle(
                             color: Colors.orangeAccent,
                             fontWeight: FontWeight.bold,
