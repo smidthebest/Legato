@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -116,9 +117,25 @@ class Post extends StatelessWidget {
   }
 
   Widget getAudioCard(BuildContext context, Map<String, dynamic> doc) {
+    // if (data["file"] != null) {
+    //   String file = data["file"];
+    //   AudioPlayer ap = new AudioPlayer();
+    //   return Container(
+    //     child: Row(
+    //       children: [
+    //         FlatButton(
+    //           child: Icon(Icons.play_arrow),
+    //           onPressed: () async {
+    //             ap.play(file);
+    //           },
+    //         )
+    //       ],
+    //     ),
+    //   );
+    // }
     String link = data["link"];
 
-    // print(link);
+    print(link);
     return YoutubePlayer(
       controller: YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(link),
