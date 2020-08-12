@@ -20,23 +20,20 @@ class Post extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      color: Colors.yellow,
-                      child: Container(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Column(
+                Flexible(
+                  child: Container(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          data["title"],
-                          style: TextStyle(
-                            color: Colors.orangeAccent,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                        Container(
+                          child: Text(
+                            data["title"],
+                            style: TextStyle(
+                              color: Colors.orangeAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                         Text(
@@ -49,12 +46,8 @@ class Post extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-                Icon(
-                  Icons.settings_input_composite,
-                  size: 30,
-                )
               ],
             ),
             SizedBox(
@@ -142,6 +135,7 @@ class Post extends StatelessWidget {
         flags: YoutubePlayerFlags(
           autoPlay: false,
           mute: false,
+          hideControls: true,
         ),
       ),
       showVideoProgressIndicator: true,
